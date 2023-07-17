@@ -21,6 +21,7 @@ fn main() {
         .build()
         .expect("could not initialize video subsystem");
     let mut canvas = window.into_canvas().build().expect("couldn't make canvas T-T");
+    
     canvas.set_draw_color(Color::RGB(0,0,0));
     canvas.clear();
     canvas.present();
@@ -44,19 +45,19 @@ fn main() {
                 Event::KeyDown { keycode: Some(Keycode::Escape), .. } => {
                     break 'main;
                 },
-                Event::KeyDown {keycode: Some(Keycode::Up), .. } => {
+                Event::KeyDown {keycode: Some(Keycode::Up), repeat: false, .. } => {
                     screen.pan(0.0,(screen.right-screen.left)*SPEED);
                     drawf(&mut canvas, &screen, max_iterations);
                 },
-                Event::KeyDown {keycode: Some(Keycode::Down), .. } => {
+                Event::KeyDown {keycode: Some(Keycode::Down), repeat: false, .. } => {
                     screen.pan(0.0,(screen.right-screen.left)*-SPEED);
                     drawf(&mut canvas, &screen, max_iterations);
                 },
-                Event::KeyDown {keycode: Some(Keycode::Left), .. } => {
+                Event::KeyDown {keycode: Some(Keycode::Left), repeat: false, .. } => {
                     screen.pan((screen.right-screen.left)*-SPEED,0.0);
                     drawf(&mut canvas, &screen, max_iterations);
                 },
-                Event::KeyDown {keycode: Some(Keycode::Right), .. } => {
+                Event::KeyDown {keycode: Some(Keycode::Right), repeat: false, .. } => {
                     screen.pan((screen.right-screen.left)*SPEED,0.0);
                     drawf(&mut canvas, &screen, max_iterations);
                 },
@@ -76,7 +77,7 @@ fn main() {
                     max_iterations -=20.0;
                     drawf(&mut canvas, &screen, max_iterations);
                 }
-                Event::KeyDown {keycode: Some(Keycode::Z), .. } => {
+                Event::KeyDown {keycode: Some(Keycode::Z), repeat:false, .. } => {
                     print!("Enter Zoom Level:");
                     stdout().flush().unwrap();
                     stdin.read_line(&mut line).unwrap();
@@ -87,7 +88,7 @@ fn main() {
                     screen.zoom((screen.right-screen.left)*ZOOM*screen.zoom);
                     drawf(&mut canvas, &screen, max_iterations);
                 }
-                Event::KeyDown {keycode: Some(Keycode::P), .. } => {
+                Event::KeyDown {keycode: Some(Keycode::P), repeat:false, .. } => {
                     print!("Enter Pan X:");
                     stdout().flush().unwrap();
                     stdin.read_line(&mut line).unwrap();
